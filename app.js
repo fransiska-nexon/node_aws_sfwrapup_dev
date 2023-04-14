@@ -16,9 +16,6 @@ const other_wrapupcode='fa3776ef-7912-4b86-9735-90914bfb9821';//this is default 
 const clientId = '09dcdd95-c024-4bf1-9dbc-f8a3cabe5a0e';
 const clientSecret = '4VgxP8qZhouO6p7X3_UE-ya9c6YdOI8JFRYwMwsEvhA';
 
-const PROD_clientId = '73bf6545-1aa0-46aa-9493-40af18d5fb05';
-const PROD_clientSecret = '5DgHjlyzdKJYFjeWXFDWCyLrN_t9-GkZullLm6TC_0c';
-
 const environment = 'mypurecloud.com.au';
 console.log(`QANTAS Org: clientid: ${clientId} clientSecret: ${clientSecret} environment: ${environment}`);
 //QANTAS ORG
@@ -116,8 +113,8 @@ app.get('/oauth2/callback', async function(req,res){
 
         // Send the session id back as a cookie
         res.cookie('session', sessionId);
-        console.log(`oauth callback @@ origURl:  https://w0x7b2psbc.execute-api.ap-southeast-2.amazonaws.com/dev${origURL}`);
-        res.redirect(`https://w0x7b2psbc.execute-api.ap-southeast-2.amazonaws.com/dev${origURL}`);
+        console.log(`oauth callback @@ origURl:  ${originloc}/dev${origURL}`);
+        res.redirect(`${originloc}/dev${origURL}`);
     })
     .catch(e => console.error(e));
 });
@@ -125,8 +122,9 @@ app.get('/oauth2/callback', async function(req,res){
 
 app.get('/', function(req, res){
     console.log(`@@!! it hit / with url:   ${req.method}   ${req.url}`);
-    //window.close();
-    res.render('https://w0x7b2psbc.execute-api.ap-southeast-2.amazonaws.com/dev/info.html');
+    var originloc =getFormattedUrl(req);
+    console.log(`@@!! it hit / with url:   ${originloc}`);
+    res.render(`${originloc}/dev/info.html`);
 })
 
 
