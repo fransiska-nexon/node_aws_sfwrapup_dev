@@ -45,8 +45,17 @@ const authvalidation = function(req, res, next) {
             first_url='';
     
             console.log('CLEARING firstAuth: '+firstAuth+ ' first_method: '+first_method+ ' first_url: '+first_url +' back_first_url: '+back_first_url);
-            console.log('calling doWrapup with request: '+back_first_url);
-            doWrapup(back_first_url);
+            console.log('firstAuth calling doWrapup with request: '+back_first_url);
+            (async () => {
+                try {
+                    const response = doWrapup(back_first_url);
+                    console.log('firstAuth doWrapup  finished with request: '+first_url);
+                    console.log('firstAuth doWrapup firstAuth status : '+JSON.stringify(response));
+                } catch (error) {
+                    console.log('firstAuth doWrapup firstAuth ERROR finished with request: '+first_url);
+                    console.log('firstAuth doWrapup firstAuth ERROR status : '+JSON.stringify(error));
+                }
+            })();
     }
 
     console.log('-----------------');
